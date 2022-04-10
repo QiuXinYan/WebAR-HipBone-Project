@@ -303,7 +303,7 @@ select {
 
 #viewport {
 	position: absolute;
-	top: 32px;
+	top: 96px;
 	left: 0;
 	right: 300px;
 	bottom: 0;
@@ -332,13 +332,12 @@ select {
 }
 
 #menubar {
+	position: absolute;
 	width: 100%;
+	top: 66px;
 	height: 32px;
 	background: #eee;
-	padding: 0;
-	margin: 0;
 	right: 0;
-	top: 64;
 }
 
 	#menubar .menu {
@@ -407,7 +406,7 @@ select {
 #sidebar {
 	position: absolute;
 	right: 0;
-	top: 32px;
+	top: 96px;
 	bottom: 0;
 	width: 300px;
 	background: #eee;
@@ -452,7 +451,7 @@ select {
 #toolbar {
 	position: absolute;
 	left: 10px;
-	top: 42px;
+	top: 64px;
 	width: 32px;
 	background: #eee;
 	text-align: center;

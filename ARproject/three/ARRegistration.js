@@ -24,10 +24,11 @@ let windowWidth, windowHeight;
 const pointer = new THREE.Vector2();
 let object_test;
 let controls;
-let cameraTop, cameraFront;
-
+let cameraTop, cameraFront, cameraLeft;
+const api = { state: 'Walking' };
 init();
-animate();
+//animate();
+
 //https://observablehq.com/@vicapow/three-js-transformcontrols-example
 //https://observablehq.com/@vicapow/threejs-example-of-multiple-transform-controls
 
@@ -43,7 +44,7 @@ function init() {
 	scene = new THREE.Scene();
 
 	const light = new THREE.DirectionalLight(0xffffff);
-	light.position.set(0, 0, 1);
+	light.position.set(300, 300, 300);
 	scene.add(light);
 
 
@@ -73,13 +74,20 @@ function init() {
 	cameraTop = createCamera();
 	cameraTop.name = 'Camera Top';
 	cameraTop.position.z = -0.1;
-	cameraTop.position.y = 1500;
+	cameraTop.position.y = 300;
 	cameraTop.lookAt(new THREE.Vector3(0, 0, 0));
 	
 	cameraFront = createCamera();
 	cameraFront.name = 'Camera Front';
-	cameraFront.position.x = 800;
+	cameraFront.position.z = 300;
 	cameraFront.lookAt(new THREE.Vector3(0, 0, 0));
+
+	cameraLeft = createCamera();
+	cameraLeft.name = 'Camera Left';
+	cameraLeft.position.x = 300;
+	cameraLeft.lookAt(new THREE.Vector3(0, 0, 0));
+
+
 
 	//add grid helper
 	const size = 10000;
@@ -87,26 +95,18 @@ function init() {
 	const gridHelper = new THREE.GridHelper(size, divisions, 0x0000ff, 0x808080);
 	scene.add(gridHelper);
 
-	//orginal obj - 
-	//set parameters
-	let material = new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff });
-	var position = new THREE.Vector3(0, 0, -2);
-	var rotation = new THREE.Vector3(0, 0, 0);
-	var scale = new THREE.Vector3(1, 1, 1);
-	loadObjects('./ar/models/box.obj',material, position, rotation, scale);
-	
-
-	let material1 = new THREE.MeshPhongMaterial({color: 0xffff00,transparent:true, opacity: 1.0});
-    let loader1 = new OBJLoader();
-        loader1.load( 'ar/models/box.obj',
+	//original object
+	let material = new THREE.MeshPhongMaterial({color: 0x00ff00,transparent:true, opacity: 1.0});
+    let loader = new OBJLoader();
+        loader.load( 'ar/models/box.obj',
           function( object ){
             object.traverse( function( child ) {
             if ( child instanceof THREE.Mesh ) {
-              child.material = material1;
+              child.material = material;
             }
           } );
-          object.position.set(-1.461, -0.6300001, 1.152);
-          object.rotation.set(THREE.Math.degToRad(0.1947449),THREE.Math.degToRad(-180.0036),THREE.Math.degToRad(-359.5482));
+          object.position.set(0, 0, 0);
+          object.rotation.set(THREE.Math.degToRad(0),THREE.Math.degToRad(-180.0036),THREE.Math.degToRad(-359.5482));
           object.scale.set(1,1,1);
 		  object_test = object;
 		  scene.add(object);
@@ -117,7 +117,31 @@ function init() {
         function( err ){
           console.error( "Error loading 'box.obj'")
         }
-      );
+    );
+
+
+	let material1 = new THREE.MeshPhongMaterial({color: 0xffff00,transparent:true, opacity: 1.0});
+    let loader1 = new OBJLoader();
+        loader1.load( 'ar/models/box.obj',
+          function( object ){
+            object.traverse( function( child ) {
+            if ( child instanceof THREE.Mesh ) {
+              child.material = material1;
+            }
+          } );
+          object.position.set(0, 0, 0);
+          object.rotation.set(THREE.Math.degToRad(0),THREE.Math.degToRad(-180.0036),THREE.Math.degToRad(-359.5482));
+          object.scale.set(1,1,1);
+		  object_test = object;
+		  scene.add(object);
+        },
+        function( xhr ){
+          // console.log( (xhr.loaded / xhr.total * 100) + "% loaded")
+        },
+        function( err ){
+          console.error( "Error loading 'box.obj'")
+        }
+    );
 
 	InitGui();
 	setControlsForCamera(cameraTop, leftElement);	
@@ -132,6 +156,7 @@ function init() {
 
 	leftElement.addEventListener('mousemove', () => setControlsForCamera(cameraTop, leftElement));
 	rightElement.addEventListener('mousemove', () => setControlsForCamera(cameraFront, rightElement));
+	leftdownElement.addEventListener('mousemove', () => setControlsForCamera(cameraLeft, leftdownElement));
 }
 
 function setControlsForCamera(camera, element) {
@@ -202,6 +227,15 @@ function render() {
     cameraFront.aspect = Math.floor(width / 2) / height;
     cameraFront.updateProjectionMatrix();
     renderer.render(scene, cameraFront);
+
+	left = Math.floor(width / 2);
+    renderer.setViewport(0, 0, Math.floor(width / 2), Math.floor(height / 2));
+    renderer.setScissor(0, 0, Math.floor(width / 2), Math.floor(height / 2));
+    renderer.setScissorTest(true);
+    renderer.setClearColor(new THREE.Color(1, 1, 1));
+    cameraFront.aspect = Math.floor(width / 2) / height;
+    cameraFront.updateProjectionMatrix();
+    renderer.render(scene, cameraLeft);
 }
 
 //-------------------------------- GUI Controls --------------------------------------------------//
@@ -212,11 +246,14 @@ function InitGui() {
 	panel.domElement.style.marginRight = '0px'
 	panel.domElement.style.right = '0px';
 	panel.domElement.style.top = '300px';
-	const folder1 = panel.addFolder('Size');
-	
-	const settings = {
+	const folder1 = panel.addFolder('objects options');
+	const folder2 = panel.addFolder('Object2');
+	let object1;
 
+	const settings = {
+		
 	}
+	//const clipCtrl = statesFolder.add( api, 'state' ).options( states );
 	//Open the folder
 	folder1.open();
 	//add folder content into the folder
@@ -230,28 +267,3 @@ function modifySize() {
 
 }
 
-// ------------------------------ load objects ----------------------------------------------------//
-
-function loadObjects(loadPath, material, position, rotation, scale) {
-	let loader = new OBJLoader();
-	loader.load(loadPath, function (object) {
-		object.traverse(function (child) {
-			if (child instanceof THREE.Mesh) {
-				child.material = material;
-			}
-		});
-		object.position.set(position);
-		object.rotation.set(rotation);
-		object.scale.set(scale);
-		scene.add(object);
-	},
-		function (xhr) {
-			// console.log( (xhr.loaded / xhr.total * 100) + "% loaded")
-		},
-		function (err) {
-			console.error("Error loading" + loadPath)
-		}
-	);
-}
-
-//-----------------------------------------------------------------------------------------------------

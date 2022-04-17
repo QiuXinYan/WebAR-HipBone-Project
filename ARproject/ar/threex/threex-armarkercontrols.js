@@ -29,7 +29,6 @@ ARjs.MarkerControls = THREEx.ArMarkerControls = function(context, object3d, para
 	var possibleValues = ['modelViewMatrix', 'cameraTransformMatrix' ]
 	console.assert(possibleValues.indexOf(this.parameters.changeMatrixMode) !== -1, 'illegal value', this.parameters.changeMatrixMode)
 
-
         // create the marker Root
 	this.object3d = object3d
 	this.object3d.matrixAutoUpdate = false;
@@ -83,9 +82,6 @@ ARjs.MarkerControls.prototype.constructor = THREEx.ArMarkerControls;
 
 ARjs.MarkerControls.prototype.dispose = function(){
 	this.context.removeMarker(this)
-
-	// TODO remove the event listener if needed
-	// unloadMaker ???
 }
 
 //////////////////////////////////////////////////////////////////////////////

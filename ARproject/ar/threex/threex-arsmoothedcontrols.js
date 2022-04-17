@@ -75,7 +75,6 @@ THREEx.ArSmoothedControls.prototype.update = function(targetObject3d){
 	var wasVisible = object3d.visible
 	var present = performance.now()/1000
 
-
 	//////////////////////////////////////////////////////////////////////////////
 	//		handle object3d.visible with minVisibleDelay/minUnvisibleDelay
 	//////////////////////////////////////////////////////////////////////////////
@@ -108,17 +107,20 @@ THREEx.ArSmoothedControls.prototype.update = function(targetObject3d){
 	// apply lerp steps - require fix time steps to behave the same no matter the fps
 	if( this._lastLerpStepAt === null ){
 		applyOneSlerpStep()
+		console.log("update smooth: applyOneSlerpStep()" )
 		this._lastLerpStepAt = present
 	}else{
 		var nStepsToDo = Math.floor( (present - this._lastLerpStepAt)/this.parameters.lerpStepDelay )
 		for(var i = 0; i < nStepsToDo; i++){
 			applyOneSlerpStep()
+			console.log("update smooth: applyOneSlerpStep()" )
 			this._lastLerpStepAt += this.parameters.lerpStepDelay
 		}
 	}
 
 	// disable the lerp by directly copying targetObject3d position/quaternion/scale
-	if( false ){		
+	if( false ){	
+		console.log("update smooth:snapDirectlyToTarget" )	
 		snapDirectlyToTarget()
 	}
 
@@ -149,4 +151,5 @@ THREEx.ArSmoothedControls.prototype.update = function(targetObject3d){
 		object3d.quaternion.slerp(targetObject3d.quaternion, parameters.lerpQuaternion)
 		object3d.scale.lerp(targetObject3d.scale, parameters.lerpScale)
 	}
+	
 }

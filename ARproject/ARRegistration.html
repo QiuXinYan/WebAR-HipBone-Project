@@ -37,14 +37,20 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto" href="./index.html">主页</a></li>
+          <li><a class="nav-link scrollto active" href="./index.html">主页</a></li>
           <li><a class="nav-link scrollto" href="./arshow.html">AR展示</a></li>
-          <li><a class="nav-link scrollto active" href="./arregistration.html">AR配准页面</a></li>
-          <li><a class="nav-link scrollto " href="./modelshow.html">髋骨展示</a></li>
-          <li><a class="nav-link scrollto" href="./graphicsarLab.html">髋骨实验室</a></li>
+          <li class="dropdown"><a href="#"><span>AR配准页面</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="./arregistration.html">AR配准页面 1</a></li>
+              <li><a href="./editor/ARRegistration.html">AR配准页面 2</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="./modelshow.html">髋骨展示</a></li>
+          <li><a class="nav-link scrollto" href="./graphicsarlab.html">髋骨实验室</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav>
+      </nav><!-- .navbar -->
     </div>
   </header>
 

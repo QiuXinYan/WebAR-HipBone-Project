@@ -22,6 +22,19 @@ function MenubarEdit( editor ) {
 	options.setClass( 'options' );
 	container.add( options );
 
+	// Execute
+
+	const execute = new UIRow();
+	execute.setClass( 'option' );
+	execute.setTextContent( strings.getKey( 'menubar/edit/execute' ) );
+	execute.onClick( function () {
+
+		editor.executeObjects();
+
+	} );
+	options.add( execute );
+
+
 	// Undo
 
 	const undo = new UIRow();

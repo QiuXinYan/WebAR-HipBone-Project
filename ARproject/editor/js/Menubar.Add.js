@@ -55,21 +55,6 @@ function MenubarAdd( editor ) {
 	} );
 	options.add( option );
 
-	// Circle
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/circle' ) );
-	option.onClick( function () {
-
-		const geometry = new THREE.CircleGeometry( 1, 8, 0, Math.PI * 2 );
-		const mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Circle';
-
-		editor.execute( new AddObjectCommand( editor, mesh ) );
-
-	} );
-	options.add( option );
 
 	// Cylinder
 
@@ -87,69 +72,6 @@ function MenubarAdd( editor ) {
 	} );
 	options.add( option );
 
-	// Dodecahedron
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/dodecahedron' ) );
-	option.onClick( function () {
-
-		const geometry = new THREE.DodecahedronGeometry( 1, 0 );
-		const mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Dodecahedron';
-
-		editor.execute( new AddObjectCommand( editor, mesh ) );
-
-	} );
-	options.add( option );
-
-	// Icosahedron
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/icosahedron' ) );
-	option.onClick( function () {
-
-		const geometry = new THREE.IcosahedronGeometry( 1, 0 );
-		const mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Icosahedron';
-
-		editor.execute( new AddObjectCommand( editor, mesh ) );
-
-	} );
-	options.add( option );
-
-	// Lathe
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/lathe' ) );
-	option.onClick( function () {
-
-		const geometry = new THREE.LatheGeometry();
-		const mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial( { side: THREE.DoubleSide } ) );
-		mesh.name = 'Lathe';
-
-		editor.execute( new AddObjectCommand( editor, mesh ) );
-
-	} );
-	options.add( option );
-
-	// Octahedron
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/octahedron' ) );
-	option.onClick( function () {
-
-		const geometry = new THREE.OctahedronGeometry( 1, 0 );
-		const mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Octahedron';
-
-		editor.execute( new AddObjectCommand( editor, mesh ) );
-
-	} );
-	options.add( option );
 
 	// Plane
 
@@ -162,22 +84,6 @@ function MenubarAdd( editor ) {
 		const material = new THREE.MeshStandardMaterial();
 		const mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'Plane';
-
-		editor.execute( new AddObjectCommand( editor, mesh ) );
-
-	} );
-	options.add( option );
-
-	// Ring
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/ring' ) );
-	option.onClick( function () {
-
-		const geometry = new THREE.RingGeometry( 0.5, 1, 8, 1, 0, Math.PI * 2 );
-		const mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Ring';
 
 		editor.execute( new AddObjectCommand( editor, mesh ) );
 
@@ -200,122 +106,6 @@ function MenubarAdd( editor ) {
 	} );
 	options.add( option );
 
-	// Sprite
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/sprite' ) );
-	option.onClick( function () {
-
-		const sprite = new THREE.Sprite( new THREE.SpriteMaterial() );
-		sprite.name = 'Sprite';
-
-		editor.execute( new AddObjectCommand( editor, sprite ) );
-
-	} );
-	options.add( option );
-
-	// Tetrahedron
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/tetrahedron' ) );
-	option.onClick( function () {
-
-		const geometry = new THREE.TetrahedronGeometry( 1, 0 );
-		const mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Tetrahedron';
-
-		editor.execute( new AddObjectCommand( editor, mesh ) );
-
-	} );
-	options.add( option );
-
-	// Torus
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/torus' ) );
-	option.onClick( function () {
-
-		const geometry = new THREE.TorusGeometry( 1, 0.4, 8, 6, Math.PI * 2 );
-		const mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Torus';
-
-		editor.execute( new AddObjectCommand( editor, mesh ) );
-
-	} );
-	options.add( option );
-
-	// TorusKnot
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/torusknot' ) );
-	option.onClick( function () {
-
-		const geometry = new THREE.TorusKnotGeometry( 1, 0.4, 64, 8, 2, 3 );
-		const mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'TorusKnot';
-
-		editor.execute( new AddObjectCommand( editor, mesh ) );
-
-	} );
-	options.add( option );
-
-	// Tube
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/add/tube' ) );
-	option.onClick( function () {
-
-		const path = new THREE.CatmullRomCurve3( [
-			new THREE.Vector3( 2, 2, - 2 ),
-			new THREE.Vector3( 2, - 2, - 0.6666666666666667 ),
-			new THREE.Vector3( - 2, - 2, 0.6666666666666667 ),
-			new THREE.Vector3( - 2, 2, 2 )
-		] );
-
-		const geometry = new THREE.TubeGeometry( path, 64, 1, 8, false );
-		const mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Tube';
-
-		editor.execute( new AddObjectCommand( editor, mesh ) );
-
-	} );
-	options.add( option );
-
-	/*
-	// Teapot
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( 'Teapot' );
-	option.onClick( function () {
-
-		let size = 50;
-		let segments = 10;
-		let bottom = true;
-		let lid = true;
-		let body = true;
-		let fitLid = false;
-		let blinnScale = true;
-
-		let material = new THREE.MeshStandardMaterial();
-
-		let geometry = new TeapotGeometry( size, segments, bottom, lid, body, fitLid, blinnScale );
-		let mesh = new THREE.Mesh( geometry, material );
-		mesh.name = 'Teapot';
-
-		editor.addObject( mesh );
-		editor.select( mesh );
-
-	} );
-	options.add( option );
-	*/
-
-	//
 
 	options.add( new UIHorizontalRule() );
 

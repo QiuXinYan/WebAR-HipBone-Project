@@ -87,8 +87,6 @@ function init() {
 	cameraLeft.position.x = 300;
 	cameraLeft.lookAt(new THREE.Vector3(0, 0, 0));
 
-
-
 	//add grid helper
 	const size = 10000;
 	const divisions = 100;
@@ -209,8 +207,6 @@ function updateSize() {
 
 function render() {
 	let left = 0;
-    const bottom = 0;
-
     renderer.setViewport(left, Math.floor(height / 2), Math.floor(width / 2), Math.floor(height / 2));
     renderer.setScissor(left , Math.floor(height / 2), Math.floor(width / 2), Math.floor(height / 2));
     renderer.setScissorTest(true);

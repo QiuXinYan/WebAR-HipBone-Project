@@ -24,6 +24,7 @@ function Strings( config ) {
 			'menubar/file/publish': 'Publish',
 
 			'menubar/edit': 'Edit',
+			'menubar/edit/execute': 'Execute',
 			'menubar/edit/undo': 'Undo (Ctrl+Z)',
 			'menubar/edit/redo': 'Redo (Ctrl+Shift+Z)',
 			'menubar/edit/clear_history': 'Clear History',
@@ -31,6 +32,7 @@ function Strings( config ) {
 			'menubar/edit/clone': 'Clone',
 			'menubar/edit/delete': 'Delete (Del)',
 			'menubar/edit/fixcolormaps': 'Fix Color Maps',
+			
 
 			'menubar/add': 'Add',
 			'menubar/add/group': 'Group',
@@ -679,6 +681,7 @@ function Strings( config ) {
 			'menubar/file/export/usdz': '导出USDZ',
 			'menubar/file/publish': '发布',
 
+			'menubar/edit/execute': '生成标记物体',
 			'menubar/edit': '编辑',
 			'menubar/edit/undo': '撤销 (Ctrl+Z)',
 			'menubar/edit/redo': '重做 (Ctrl+Shift+Z)',

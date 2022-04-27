@@ -17,8 +17,9 @@ function Storage() {
 	return {
 
 		init: function ( callback ) {
-
+			//打开数据库
 			const request = indexedDB.open( name, version );
+			//数据库升级回调
 			request.onupgradeneeded = function ( event ) {
 
 				const db = event.target.result;
@@ -30,7 +31,7 @@ function Storage() {
 				}
 
 			};
-
+			//数据库操作成功
 			request.onsuccess = function ( event ) {
 
 				database = event.target.result;
@@ -38,7 +39,7 @@ function Storage() {
 				callback();
 
 			};
-
+			//数据库操作错误
 			request.onerror = function ( event ) {
 
 				console.error( 'IndexedDB', event );
@@ -47,7 +48,7 @@ function Storage() {
 
 
 		},
-
+		//清空数据
 		get: function ( callback ) {
 
 			const transaction = database.transaction( [ 'states' ], 'readwrite' );

@@ -6,15 +6,19 @@ import { History as _History } from './History.js';
 import { Strings } from './Strings.js';
 import { Storage as _Storage } from './Storage.js';
 
+//整个编辑器的相机DEFAULT_CAMERA
 var _DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.01, 1000 );
 _DEFAULT_CAMERA.name = 'Camera';
 _DEFAULT_CAMERA.position.set( 0, 5, 10 );
 _DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
+//编辑器的上下文,是所有ui与对象交互的桥梁
+
 function Editor() {
 
 	var Signal = signals.Signal;
 
+	//信息传递的介质this.signals
 	this.signals = {
 
 		// script
@@ -111,15 +115,44 @@ function Editor() {
 	this.materialsRefCounter = new Map(); // tracks how often is a material used by a 3D object
 
 	this.mixer = new THREE.AnimationMixer( this.scene );
-
+	//当前关注的对象this.selected
 	this.selected = null;
 	this.helpers = {};
 
 	this.cameras = {};
 	this.viewportCamera = this.camera;
-
 	this.addCamera( this.camera );
 
+	const createCamera = () => {
+		const fov = 45;
+		const aspect = 1;
+		const near = 1;
+		const far = 1000;
+		const camera = new THREE.OrthographicCamera(fov, aspect, near, far);
+		return camera;
+	};
+
+	//增加正视图的相机
+	var frontCamera = createCamera();
+	frontCamera.name = 'Front Camera';
+	frontCamera.position.z = 300;
+	frontCamera.lookAt(new THREE.Vector3(0, 0, 0));
+	this.addCamera(frontCamera);
+
+	//增加俯视图的相机
+	var topCamera = createCamera();
+	topCamera.name = 'Top Camera';
+	topCamera.position.z = -0.1;
+	topCamera.position.y = 300;
+	topCamera.lookAt(new THREE.Vector3(0, 0, 0));
+	this.addCamera(topCamera);
+	
+	//增加侧视图相机
+	var leftCamera = createCamera();
+	leftCamera.name = 'Left Camera';
+	leftCamera.position.x = 300;
+	leftCamera.lookAt(new THREE.Vector3(0, 0, 0));
+	this.addCamera(leftCamera);
 }
 
 Editor.prototype = {
@@ -526,8 +559,9 @@ Editor.prototype = {
 	setViewportCamera: function ( uuid ) {
 
 		this.viewportCamera = this.cameras[ uuid ];
+		this.camera  = this.cameras[ uuid ];
 		this.signals.viewportCameraChanged.dispatch();
-
+		
 	},
 
 	//
@@ -671,7 +705,6 @@ Editor.prototype = {
 			if ( script.length === 0 || scene.getObjectByProperty( 'uuid', key ) === undefined ) {
 
 				delete scripts[ key ];
-
 			}
 
 		}
@@ -713,6 +746,11 @@ Editor.prototype = {
 	undo: function () {
 
 		this.history.undo();
+
+	},
+
+	executeObjects:function () {
+
 
 	},
 

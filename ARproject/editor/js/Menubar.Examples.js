@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import { UIPanel, UIRow } from './libs/ui.js';
-
+import { AddObjectCommand } from './commands/AddObjectCommand.js';
 function MenubarExamples( editor ) {
 
 	const strings = editor.strings;
@@ -21,12 +21,11 @@ function MenubarExamples( editor ) {
 	// Examples
 
 	const items = [
-		{ title: 'menubar/examples/Arkanoid', file: 'arkanoid.app.json' },
-		{ title: 'menubar/examples/Camera', file: 'camera.app.json' },
-		{ title: 'menubar/examples/Particles', file: 'particles.app.json' },
-		{ title: 'menubar/examples/Pong', file: 'pong.app.json' },
-		{ title: 'menubar/examples/Shaders', file: 'shaders.app.json' }
+		{ title: 'menubar/examples/kuanguscene', file: 'kuanguscene.json' },
 	];
+
+
+
 
 	const loader = new THREE.FileLoader();
 
@@ -43,13 +42,30 @@ function MenubarExamples( editor ) {
 
 				if ( confirm( 'Any unsaved data will be lost. Are you sure?' ) ) {
 
-					loader.load( 'examples/' + item.file, function ( text ) {
+					const loader = new THREE.ObjectLoader();
 
-						editor.clear();
-						editor.fromJSON( JSON.parse( text ) );
+					loader.load(
+						// resource URL
+						'examples/' + item.file,
 
-					} );
+						// onLoad callback
+						// Here the loaded data is assumed to be an object
+						function ( obj ) {
+							// Add the loaded object to the scene
+							console.log(obj);
+							editor.execute( new AddObjectCommand( editor, obj ) );
+						},
 
+						// onProgress callback
+						function ( xhr ) {
+							console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+						},
+
+						// onError callback
+						function ( err ) {
+							console.error( 'An error happened' );
+						}
+					);		
 				}
 
 			} );

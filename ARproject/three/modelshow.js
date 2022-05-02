@@ -15,8 +15,8 @@
     scene = new THREE.Scene();
     
     camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 10000);
-    camera.position.set(0, 0, 2); //设置相机的位置
-    camera.lookAt(1, -1, -1);			//相机看的方向
+    camera.position.set(0, 0, 2);       //设置相机的位置
+    camera.lookAt(1, -1, -1);			      //相机看的方向
     scene.add(camera);
 
     //------------------------add lights---------------------------------------//
@@ -63,7 +63,7 @@
       transparent: true,
     });
     let loader = new THREE.GLTFLoader();
-    let path = './assets/models/SKIN.gltf';
+    let path = './assets/models/compressed/SKIN.gltf';
     var dracoloader = new THREE.DRACOLoader();
     dracoloader.setDecoderPath('./three/draco/gltf/');
     loader.setDRACOLoader(dracoloader);
@@ -74,14 +74,14 @@
         model.traverse(function (gltf) {
           if (gltf.isMesh) {   
             gltf.castShadow = true;
+            gltf.geometry.computeVertexNormals();
             gltf.material = skinMaterial; 
             skinmodel = gltf;      
           }
         });
+        model.position.set(0, -5, 0);
         model.scale.set(0.003, 0.003, 0.003);
-        model.rotation.y += - Math.PI / 2;
         model.rotation.x += Math.PI;
-        model.position.set(0.5, 0, 0);
         scene.add(model);
       },
       (xhr) => {
@@ -93,7 +93,7 @@
 
     //load objects function
     loader = new THREE.GLTFLoader();
-    path = './assets/models/KUANGU.gltf';
+    path = './assets/models/compressed/KUANGU.gltf';
     dracoloader = new THREE.DRACOLoader();
     dracoloader.setDecoderPath('./three/draco/gltf/');
     loader.setDRACOLoader(dracoloader);
@@ -104,13 +104,13 @@
         model.traverse(function (gltf) {
           if (gltf.isMesh) {   
             gltf.castShadow = true;
+            gltf.geometry.computeVertexNormals();
             gltf.material = modelPBRmaterial;
           }
         });
+        model.position.set(0, -5, 0);
         model.scale.set(0.003, 0.003, 0.003);
-        model.rotation.y += - Math.PI / 2;
         model.rotation.x += Math.PI;
-        model.position.set(0.5, 0, 0);
         scene.add(model);
       },
       (xhr) => {

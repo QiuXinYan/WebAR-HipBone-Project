@@ -8,7 +8,7 @@ function Storage() {
 		return { init: function () {}, get: function () {}, set: function () {}, clear: function () {} };
 
 	}
-
+	let MatrixTableName = "matrixStorage";
 	const name = 'threejs-editor';
 	const version = 1;
 
@@ -30,12 +30,13 @@ function Storage() {
 
 				}
 
+
 			};
 			//数据库操作成功
 			request.onsuccess = function ( event ) {
 
 				database = event.target.result;
-
+				console.log(database);
 				callback();
 
 			};
@@ -90,8 +91,7 @@ function Storage() {
 
 			};
 
-		}
-
+		},
 	};
 
 }

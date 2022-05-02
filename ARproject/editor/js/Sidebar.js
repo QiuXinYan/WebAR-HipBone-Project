@@ -6,6 +6,7 @@ import { SidebarScript } from './Sidebar.Script.js';
 import { SidebarAnimation } from './Sidebar.Animation.js';
 import { SidebarProject } from './Sidebar.Project.js';
 import { SidebarSettings } from './Sidebar.Settings.js';
+import { SidebarStorage } from './Sidebar.Storage.js';
 
 function Sidebar( editor ) {
 
@@ -18,14 +19,16 @@ function Sidebar( editor ) {
 		new SidebarScene( editor ),
 		new SidebarProperties( editor ),
 		new SidebarAnimation( editor ),
-		new SidebarScript( editor )
+		new SidebarScript( editor ),
+		
 	);
 	const project = new SidebarProject( editor );
 	const settings = new SidebarSettings( editor );
-
+	const storage = new SidebarStorage( editor );
 	container.addTab( 'scene', strings.getKey( 'sidebar/scene' ), scene );
 	container.addTab( 'project', strings.getKey( 'sidebar/project' ), project );
 	container.addTab( 'settings', strings.getKey( 'sidebar/settings' ), settings );
+	container.addTab( 'storage', strings.getKey( 'sidebar/storage' ), storage );
 	container.select( 'scene' );
 
 	return container;

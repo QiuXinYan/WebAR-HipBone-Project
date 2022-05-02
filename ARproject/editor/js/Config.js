@@ -3,7 +3,7 @@ function Config() {
 	const name = 'threejs-editor';
 
 	const storage = {
-		'language': 'en',
+		'language': 'zh',
 
 		'autosave': true,
 

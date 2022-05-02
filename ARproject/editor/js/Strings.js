@@ -36,6 +36,9 @@ function Strings( config ) {
 
 			'menubar/add': 'Add',
 			'menubar/add/group': 'Group',
+			'menubar/add/markerA':'MarkerA',
+			'menubar/add/markerB':'MarkerB',
+			'menubar/add/markerHiro':'MarkerHiro',
 			'menubar/add/plane': 'Plane',
 			'menubar/add/box': 'Box',
 			'menubar/add/circle': 'Circle',
@@ -66,7 +69,7 @@ function Strings( config ) {
 			'menubar/play/play': 'Play',
 
 			'menubar/examples': 'Examples',
-			'menubar/examples/Arkanoid': 'Arkanoid',
+			'menubar/examples/kuanguscene': 'kuanguscene',
 			'menubar/examples/Camera': 'Camera',
 			'menubar/examples/Particles': 'Particles',
 			'menubar/examples/Pong': 'Pong',
@@ -90,6 +93,8 @@ function Strings( config ) {
 			'sidebar/scene/background': 'Background',
 			'sidebar/scene/environment': 'Environment',
 			'sidebar/scene/fog': 'Fog',
+			'sidebar/scene/storeMatrix':'Storage matrix',
+			'sidebar/scene/deletaAllRecords': 'deletaAllRecords',
 
 			'sidebar/properties/object': 'Object',
 			'sidebar/properties/geometry': 'Geometry',
@@ -320,6 +325,8 @@ function Strings( config ) {
 
 			'sidebar/history': 'History',
 			'sidebar/history/persistent': 'persistent',
+
+			'sidebar/storage': 'Storage',
 
 			'toolbar/translate': 'Translate',
 			'toolbar/rotate': 'Rotate',
@@ -693,6 +700,9 @@ function Strings( config ) {
 
 			'menubar/add': '添加',
 			'menubar/add/group': '组',
+			'menubar/add/markerA':'标记A',
+			'menubar/add/markerB':'标记B',
+			'menubar/add/markerHiro':'标记Hiro',
 			'menubar/add/plane': '平面',
 			'menubar/add/box': '正方体',
 			'menubar/add/circle': '圆',
@@ -722,8 +732,8 @@ function Strings( config ) {
 			'menubar/play/stop': '暂停',
 			'menubar/play/play': '启动',
 
-			'menubar/examples': '示例',
-			'menubar/examples/Arkanoid': '打砖块',
+			'menubar/examples': '髋骨配准场景',
+			'menubar/examples/kuanguscene': '配准场景',
 			'menubar/examples/Camera': ' 摄像机',
 			'menubar/examples/Particles': '粒子',
 			'menubar/examples/Pong': '乒乓球',
@@ -747,7 +757,10 @@ function Strings( config ) {
 			'sidebar/scene/background': '背景',
 			'sidebar/scene/environment': '环境',
 			'sidebar/scene/fog': '雾',
-
+			'sidebar/scene/generateMarkers':'生成标记物体',
+			'sidebar/scene/storeMatrix': '存储矩阵信息',
+			'sidebar/scene/deletaAllRecords': '删除所有存储数据',
+			
 			'sidebar/properties/object': '属性',
 			'sidebar/properties/geometry': '几何组件',
 			'sidebar/properties/material': '材质组件',
@@ -977,6 +990,7 @@ function Strings( config ) {
 
 			'sidebar/history': '历史记录',
 			'sidebar/history/persistent': '本地存储',
+			'sidebar/storage':'存储信息',
 
 			'toolbar/translate': '移动',
 			'toolbar/rotate': '旋转',

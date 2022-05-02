@@ -6,6 +6,7 @@ import { AddObjectCommand } from './commands/AddObjectCommand.js';
 
 function MenubarAdd( editor ) {
 
+
 	const strings = editor.strings;
 
 	const container = new UIPanel();
@@ -37,6 +38,51 @@ function MenubarAdd( editor ) {
 
 	//
 
+	options.add( new UIHorizontalRule() );
+
+
+	// markerA\B\Hiro
+	
+	const items = [
+		{ title: 'menubar/add/markerA', file: './assets/markerA.json' },
+		{ title: 'menubar/add/markerB', file: './assets/markerB.json' },
+		{ title: 'menubar/add/markerHiro', file: './assets/markerHiro.json' },
+	];
+	const loader = new THREE.ObjectLoader();
+	for ( let i = 0; i < items.length; i ++ ) {
+
+		( function ( i ) {
+
+			const item = items[ i ];
+
+			const option = new UIRow();
+			option.setClass( 'option' );
+			option.setTextContent( strings.getKey( item.title ) );
+			option.onClick( function () {
+				loader.load(
+					// resource URL
+					item.file,
+					// onLoad callback
+					// Here the loaded data is assumed to be an object
+					function ( obj ) {
+						// Add the loaded object to the scene
+						editor.execute( new AddObjectCommand( editor, obj ) );
+					},
+				
+					// onProgress callback
+					function ( xhr ) {
+						console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+					},
+				
+					// onError callback
+					function ( err ) {
+						console.error( 'An error happened' );
+					}
+				);
+			} );
+			options.add( option );
+		} )( i );
+	}
 	options.add( new UIHorizontalRule() );
 
 	// Box

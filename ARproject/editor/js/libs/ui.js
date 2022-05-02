@@ -992,7 +992,6 @@ class UIButton extends UIElement {
 		this.dom.textContent = value;
 
 	}
-
 }
 
 class UIProgress extends UIElement {

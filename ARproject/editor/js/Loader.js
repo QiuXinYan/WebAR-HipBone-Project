@@ -26,7 +26,7 @@ function Loader( editor ) {
 	};
 
 	this.loadFiles = function ( files, filesMap ) {
-
+		console.log(files);
 		if ( files.length > 0 ) {
 
 			filesMap = filesMap || LoaderUtils.createFilesMap( files );

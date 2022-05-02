@@ -1,57 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">   
-        <title>WebAR实时引导</title>
-        <meta content="" name="description">
-        <meta content="" name="keywords">
-      
-        <!-- Favicons -->
-        <link href="assets/img/favicon.png" rel="icon">
-        <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-      
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-      
-        <!-- Vendor CSS Files -->
-        <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-        <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-        <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-        <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-        <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-        <!-- Template Main CSS File -->
-        <link href="assets/css/style.css" rel="stylesheet">
-      
-      </head>
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>WebAR实时引导</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="./assets/css/font.css" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+
 <body>
-    <header id="header" class="d-flex align-items-center">
-        <div class="container d-flex align-items-center justify-content-between">
-          <h1 class="logo"><a href="index.html">WebAR实时引导<span>.</span></a></h1>
-          <nav id="navbar" class="navbar">
+  <header id="header" class="d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+      <h1 class="logo"><a href="index.html">WebAR实时引导<span>.</span></a></h1>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto" href="./index.html">主页</a></li>
+          <li><a class="nav-link scrollto active" href="./arshow.html">AR展示</a></li>
+          <li class="dropdown"><a href="#"><span>AR配准页面</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a class="nav-link scrollto active" href="./index.html">主页</a></li>
-              <li><a class="nav-link scrollto" href="./arshow.html">AR展示</a></li>
-              <li class="dropdown"><a href="#"><span>AR配准页面</span> <i class="bi bi-chevron-down"></i></a>
-                <ul>
-                  <li><a href="./arregistration.html">AR配准页面 1</a></li>
-                  <li><a href="./editor/ARRegistration.html">AR配准页面 2</a></li>
-                </ul>
-              </li>
-              <li><a class="nav-link scrollto" href="./modelshow.html">髋骨展示</a></li>
-              <li><a class="nav-link scrollto" href="./graphicsarlab.html">髋骨实验室</a></li>
-              <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+              <li><a href="./arregistration.html">AR配准页面 1</a></li>
+              <li><a href="./editor/ARRegistration.html">AR配准页面 2</a></li>
             </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-          </nav><!-- .navbar -->
-        </div>
-      </header><!-- End Header -->
+          </li>
+          <li><a class="nav-link scrollto" href="./modelshow.html">髋骨展示</a></li>
+          <li><a class="nav-link scrollto" href="./graphicsarlab.html">髋骨实验室</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
 </body>
 
 <!-- Custom JS File -->
 <!-- Vendor JS Files -->
-<script data-consolejs-channel="92501a36-4da1-ca63-d7d9-a31999e68b83" src="https://remotejs.com/agent/agent.js"></script>
+<script data-consolejs-channel="92501a36-4da1-ca63-d7d9-a31999e68b83"
+  src="https://remotejs.com/agent/agent.js"></script>
 <script src="assets/vendor/purecounter/purecounter.js"></script>
 <script src="assets/vendor/aos/aos.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -62,9 +65,8 @@
 <script src="assets/vendor/php-email-form/validate.js"></script>
 
 <!-- Rendering JS files -->
-<script src='three/js/three.js'></script>
-<script src='three/js/OBJLoader.js'></script>
-<script src='three/js/MTLLoader.js'></script>
+<script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/r127/build/three.js"></script>
+<script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/r127/examples/js/loaders/OBJLoader.js"></script>
 <!-- include jsartookit -->
 <script src="ar/jsartoolkit5/artoolkit.min.js"></script>
 <script src="ar/jsartoolkit5/artoolkit.api.js"></script>
@@ -76,226 +78,249 @@
 <script src="ar/threex/threex-arsmoothedcontrols.js"></script>
 <script src="ar/threex/threex-armultimarkercontrols.js"></script>
 
-<script>
-//Root:添加物体，Controls.object3D是显示出来的物体
+<script type="module">
+  //Root:添加物体，Controls.object3D是显示出来的物体
+  import IndexDB from './assets/js/IndexDB.js'
 
 
-// build a markerRoot
-let markerRoot;
-let markerControls, markerControls1;
-let  subMarkersControls = [];
-//rendering variables
-var scene, camera, renderer, clock, deltaTime, totalTime;
-// array of functions for the rendering loop
-let onRenderFcts= [];
+  // build a markerRoot
+  let markerRoot, markerRoot1;
+  let markerRoots = [];
+  let markerControls, markerControls1;
+  let subMarkersControls = [];
+  let originMatrix = new THREE.Matrix4();
+  //rendering variables
+  var scene, camera, renderer, clock, deltaTime, totalTime;
+  // array of functions for the rendering loop
+  let onRenderFcts = [];
+  var arToolkitSource, arToolkitContext;
+  let parametersLists = [];
+  const dbName = 'customDB', storeName = 'matrixStorage'
+  //get datas from indexDB
+  const yoffset = 0.01, zoffset = 1.152;
+  let count = 0;
 
-let patternNames = ["hiro.patt", "letterA.patt", "letterB.patt"];
+  initialize();
 
-var arToolkitSource, arToolkitContext;
-var lastShowingObject, markerObject, markerObject1;
+  function initialize() {
 
+    //add scenes
+    scene = new THREE.Scene();
 
-initialize();
+    //add lights
+    let ambientLight = new THREE.AmbientLight(0xcccccc, 0.5);
+    scene.add(ambientLight);
 
-function initialize()
-{
-      //add scenes
-      scene = new THREE.Scene();
+    //add cameras
+    camera = new THREE.Camera();
+    scene.add(camera);
 
-      //add lights
-      let ambientLight = new THREE.AmbientLight( 0xcccccc, 0.5 );
-      scene.add( ambientLight );
-            
-      //add cameras
-      camera = new THREE.Camera();
-      scene.add(camera);
+    //add renderers
+    renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true
+    });
+    //set renderer's parameters
+    renderer.setClearColor(new THREE.Color('lightgrey'), 0)
+    renderer.setSize(640, 480);
+    renderer.domElement.style.position = 'absolute'
+    renderer.domElement.style.top = '0px'
+    renderer.domElement.style.left = '0px'
+    document.body.appendChild(renderer.domElement);
 
-      //add renderers
-      renderer = new THREE.WebGLRenderer({
-        antialias : true,
-        alpha: true                      
-      });
-      //set renderer's parameters
-      renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-      renderer.setSize( 640, 480 );
-      renderer.domElement.style.position = 'absolute'
-      renderer.domElement.style.top = '0px'
-      renderer.domElement.style.left = '0px'
-      document.body.appendChild( renderer.domElement );
+    clock = new THREE.Clock();
+    deltaTime = 0;
+    totalTime = 0;
 
-      clock = new THREE.Clock();
-      deltaTime = 0;
-      totalTime = 0;
+    ////////////////////////////////////////////////////////////
+    // setup arToolkitSource
+    ////////////////////////////////////////////////////////////
 
-      ////////////////////////////////////////////////////////////
-      // setup arToolkitSource
-      ////////////////////////////////////////////////////////////
+    arToolkitSource = new THREEx.ArToolkitSource({
+      sourceType: 'webcam',
+    });
 
-      arToolkitSource = new THREEx.ArToolkitSource({
-        sourceType : 'webcam',
-      });
-
-      function onResize()
-      {
-        arToolkitSource.onResize()	
-        arToolkitSource.copySizeTo(renderer.domElement)	
-        if ( arToolkitContext.arController !== null )
-        {
-          arToolkitSource.copySizeTo(arToolkitContext.arController.canvas)	
-        }	
+    function onResize() {
+      arToolkitSource.onResize()
+      arToolkitSource.copySizeTo(renderer.domElement)
+      if (arToolkitContext.arController !== null) {
+        arToolkitSource.copySizeTo(arToolkitContext.arController.canvas)
       }
+    }
 
-      arToolkitSource.init(function onReady(){
-        onResize()
-      });
-      
-      // handle resize event
-      window.addEventListener('resize', function(){
-        onResize()
-      });
-      
-      ////////////////////////////////////////////////////////////
-      // setup arToolkitContext
-      ////////////////////////////////////////////////////////////	
+    arToolkitSource.init(function onReady() {
+      onResize()
+    });
 
-      // create atToolkitContext
-      arToolkitContext = new THREEx.ArToolkitContext({
-        cameraParametersUrl: 'ar/data/camera_para.dat',
-        detectionMode: 'mono'
-      });
+    // handle resize event
+    window.addEventListener('resize', function () {
+      onResize()
+    });
 
-     // copy projection matrix to camera when initialization complete
-        arToolkitContext.init( function onCompleted(){
-        camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
-      });
+    ////////////////////////////////////////////////////////////
+    // setup arToolkitContext
+    ////////////////////////////////////////////////////////////	
 
-      //////////////////////////////////////////////////////////////////////////////
-      //		Create ArMultiMarkerControls
-	    //////////////////////////////////////////////////////////////////////////////
-	    // build a markerRoot
-      markerRoot = new THREE.Group();
-      scene.add(markerRoot);
+    // create atToolkitContext
+    arToolkitContext = new THREEx.ArToolkitContext({
+      cameraParametersUrl: 'ar/data/camera_para.dat',
+      detectionMode: 'mono'
+    });
 
-      markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
-        type : 'pattern', patternUrl : "ar/data/hiro.patt",
-      });
+    // copy projection matrix to camera when initialization complete
+    arToolkitContext.init(function onCompleted() {
+      camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+    });
 
-      let  markerRoot1;
-      markerRoot1 = new THREE.Group();
-      scene.add(markerRoot1);
+    //////////////////////////////////////////////////////////////////////////////
+    //		Create ArMultiMarkerControls
+    //////////////////////////////////////////////////////////////////////////////
+    // build a markerRoot
+    markerRoot = new THREE.Group();
+    scene.add(markerRoot);
 
-      markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
-        type : 'pattern', patternUrl : "ar/data/letterA.patt",
-      });
+    markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
+      type: 'pattern', patternUrl: "ar/data/hiro.patt",
+    });
 
-      subMarkersControls.push(markerControls);
-      subMarkersControls.push(markerControls1);
-     
-      // build a multiMarkerControls
-	    var multiMarkerControls = THREEx.ArMultiMarkerControls(subMarkersControls)
+    markerRoot1 = new THREE.Group();
+    scene.add(markerRoot1);
 
-      var smoothedControls = new THREEx.ArSmoothedControls(markerRoot)
+    markerRoots.push(markerRoot);
+    markerRoots.push(markerRoot1);
 
-      onRenderFcts.push(function(delta){
-          // update artoolkit on every frame
-          if ( arToolkitSource.ready !== false )
-            arToolkitContext.update( arToolkitSource.domElement );
-          THREEx.ArMultiMarkerControls.changeObjectPosition(subMarkersControls, markerRoot,smoothedControls);
-      }) 
+    markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
+      type: 'pattern', patternUrl: "ar/data/letterA.patt",
+    });
 
-      let material = new THREE.MeshPhongMaterial({color: 0x00ffff, side: THREE.DoubleSide,transparent:true,opacity: 0.0});
-      let loader = new THREE.OBJLoader();
-      loader.load( 'ar/models/box.obj',
-        function( object ){
-          object.traverse( function( child ) {
-          if ( child instanceof THREE.Mesh ) {
-            child.material = material;
-          }
-        } );
-        object.position.set(1.389, -0.6300001, 1.152);
-        object.rotation.set(THREE.Math.degToRad(0.1947449),THREE.Math.degToRad(-180.0036),THREE.Math.degToRad(-359.5482));
-        object.scale.set(0.025,0.025,0.025);
-        markerRoot.add(object);
-      },
-      function( xhr ){
-         console.log( (xhr.loaded / xhr.total * 100) + "% loaded")
-      },
-      function( err ){
-        console.error( "Error loading 'box.obj'")
-      }
-      );
+    subMarkersControls.push(markerControls);
+    subMarkersControls.push(markerControls1);
 
-      let material1 = new THREE.MeshPhongMaterial({color: 0xffff00,transparent:true, opacity: 0.0});
-      let loader1 = new THREE.OBJLoader();
-        loader1.load( 'ar/models/box.obj',
-          function( object ){
-            object.traverse( function( child ) {
-            if ( child instanceof THREE.Mesh ) {
-              child.material = material1;
-            }
-          } );
-          object.position.set(-1.461, -0.6300001, 1.152);
-          object.rotation.set(THREE.Math.degToRad(0.1947449),THREE.Math.degToRad(-180.0036),THREE.Math.degToRad(-359.5482));
-          object.scale.set(0.025,0.025,0.025);
-          
-          console.log(object);
-        },
-        function( xhr ){
-          console.log( (xhr.loaded / xhr.total * 100) + "% loaded")
-        },
-        function( err ){
-          console.error( "Error loading 'box.obj'")
+    // build a multiMarkerControls
+    var multiMarkerControls = THREEx.ArMultiMarkerControls(subMarkersControls)
+
+    var smoothedControls = new THREEx.ArSmoothedControls(markerRoot)
+
+    onRenderFcts.push(function (delta) {
+      // update artoolkit on every frame
+      if (arToolkitSource.ready !== false)
+        arToolkitContext.update(arToolkitSource.domElement);
+        THREEx.ArMultiMarkerControls.changeObjectPosition(subMarkersControls, markerRoot,smoothedControls);
+    })
+
+      ; (async function () {
+        let db = await IndexDB.openDB(dbName, storeName, 1)
+        count = await IndexDB.getCounts(db, storeName);
+
+        for (var i = 0; i < count; i++) {
+
+          var data = await IndexDB.getDataByKey(db, storeName, i);
+          parametersLists.push(data);
         }
-      );
 
-      //////////////////////////////////////////////////////////////////////////////////
-	    //		Add simple object on smoothedRoot(marker root)
-	    //////////////////////////////////////////////////////////////////////////////////
+        for (var i = 0; i < count; i++) {
 
-        let material2 = new THREE.MeshPhongMaterial({color: 0xff00ff, transparent:false, opacity: 0.5});
+          let material = new THREE.MeshPhongMaterial({ color: 0x00ffff, side: THREE.DoubleSide, transparent: true, opacity: 0.1 });
+          let loader = new THREE.OBJLoader();
+
+          loader.load('ar/models/box.obj',
+            function (object) {
+              object.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                  child.material = material;
+
+                }
+              });
+
+              var tmpMatrix = new THREE.Matrix4();
+              console.log(parametersLists[i])
+              var array = parametersLists[i].matrix;
+              tmpMatrix.fromArray(array.elements);
+              var position = new THREE.Vector3();
+              var scale = new THREE.Vector3();
+              var quaternion = new THREE.Quaternion();
+              tmpMatrix.decompose(position, quaternion, scale);
+              var rotation = new THREE.Euler().setFromQuaternion(quaternion);
+              object.position.set(position.x, yoffset, zoffset);
+              object.rotation.set(rotation.x, rotation.y, rotation.z);
+              object.rotation.x = Math.PI;
+              object.rotation.z = Math.PI;
+              object.scale.set(scale.x, scale.y, scale.z);
+              markerRoots[i].add(object);
+
+            },
+            function (xhr) {
+              console.log((xhr.loaded / xhr.total * 100) + "% loaded")
+            },
+            function (err) {
+              console.error("Error loading 'box.obj'", err)
+            }
+          );
+        }
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////
+        //		Add simple object on smoothedRoot(marker root)
+        //////////////////////////////////////////////////////////////////////////////////
+
+        let material2 = new THREE.MeshPhongMaterial({ color: 0xff00ff, transparent: false, opacity: 0.5 });
         let loader2 = new THREE.OBJLoader();
-        loader2.load( 'ar/models/box.obj',
-          function( object ){
-            object.traverse( function( child ) {
-            if ( child instanceof THREE.Mesh ) {
-              child.material = material2;
-            }
-          } );
-          object.position.set(1.389, -0.6300001, 1.152);
-          object.renderOrder = 1;
-          object.rotation.set(THREE.Math.degToRad(0.1947449),THREE.Math.degToRad(-180.0036),THREE.Math.degToRad(-359.5482));
-          object.scale.set(0.025,0.025,0.025);
-          markerRoot.add(object);
-        },
-        function( xhr ){
-           console.log( (xhr.loaded / xhr.total * 100) + "% loaded")
-        },
-        function( err ){
-           console.error( "Error loading 'box.obj'")
-        }
-        ); 
-        onRenderFcts.push(function(){
-        renderer.render( scene, camera );
-      })
+        loader2.load('ar/models/box.obj',
+          function (object) {
+            object.traverse(function (child) {
+              if (child instanceof THREE.Mesh) {
+                child.material = material2;
+              }
+            });
+            object.renderOrder = 1;
+            var tmpMatrix = new THREE.Matrix4();
+            var array = parametersLists[0].matrix;
+            tmpMatrix.fromArray(array.elements);
+            var position = new THREE.Vector3();
+            var scale = new THREE.Vector3();
+            var quaternion = new THREE.Quaternion();
+            tmpMatrix.decompose(position, quaternion, scale);
+            var rotation = new THREE.Euler().setFromQuaternion(quaternion);
+            object.position.set(position.x, yoffset, zoffset);
+            object.rotation.set(rotation.x, rotation.y, rotation.z);
+            object.rotation.x = object.rotation.z = Math.PI;
+            object.scale.set(scale.x, scale.y, scale.z);
+            markerRoot.add(object);
+          },
+          function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + "% loaded")
+          },
+          function (err) {
+            console.error("Error loading 'box.obj'", err)
+          }
+        );
+      })();
 
-    
+    onRenderFcts.push(function () {
+      renderer.render(scene, camera);
+    })
+
+
     // run the rendering loop
-    var lastTimeMsec= null
-    requestAnimationFrame(function animate(nowMsec){
+    var lastTimeMsec = null
+    requestAnimationFrame(function animate(nowMsec) {
       // keep looping
-      requestAnimationFrame( animate );
+      requestAnimationFrame(animate);
       // measure time
-      lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
-      var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
-      lastTimeMsec	= nowMsec
+      lastTimeMsec = lastTimeMsec || nowMsec - 1000 / 60
+      var deltaMsec = Math.min(200, nowMsec - lastTimeMsec)
+      lastTimeMsec = nowMsec
       // call each update function
-      onRenderFcts.forEach(function(onRenderFct){
-        onRenderFct(deltaMsec/1000, nowMsec/1000)
+      onRenderFcts.forEach(function (onRenderFct) {
+        onRenderFct(deltaMsec / 1000, nowMsec / 1000)
       })
     })
-}
+  }
 
 </script>
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
+
 </html>

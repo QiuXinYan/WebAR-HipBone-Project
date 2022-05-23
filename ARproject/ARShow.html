@@ -67,6 +67,9 @@
 <!-- Rendering JS files -->
 <script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/r127/build/three.js"></script>
 <script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/r127/examples/js/loaders/OBJLoader.js"></script>
+<script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/r127/examples/js/loaders/GLTFLoader.js"></script>
+<script type="text/javascript"
+  src="https://rawgit.com/mrdoob/three.js/r127/examples/js/geometries/DecalGeometry.js"></script>
 <!-- include jsartookit -->
 <script src="ar/jsartoolkit5/artoolkit.min.js"></script>
 <script src="ar/jsartoolkit5/artoolkit.api.js"></script>
@@ -82,23 +85,58 @@
   //Root:添加物体，Controls.object3D是显示出来的物体
   import IndexDB from './assets/js/IndexDB.js'
 
-
   // build a markerRoot
   let markerRoot, markerRoot1;
   let markerRoots = [];
   let markerControls, markerControls1;
   let subMarkersControls = [];
   let originMatrix = new THREE.Matrix4();
-  //rendering variables
-  var scene, camera, renderer, clock, deltaTime, totalTime;
+  //rendering letiables
+  let scene, camera, renderer, clock, deltaTime, totalTime;
   // array of functions for the rendering loop
   let onRenderFcts = [];
-  var arToolkitSource, arToolkitContext;
+  let arToolkitSource, arToolkitContext;
   let parametersLists = [];
   const dbName = 'customDB', storeName = 'matrixStorage'
   //get datas from indexDB
-  const yoffset = 0.01, zoffset = 1.152;
+  const xoffset = 0.5050001, zoffset = [-29.05, -38.33];
+  const yoffset = 3.88;
   let count = 0;
+  let mesh;
+  let raycaster;
+  let line;
+
+  const intersection = {
+    intersects: false,
+    point: new THREE.Vector3(),
+    normal: new THREE.Vector3()
+  };
+
+  const mouse = new THREE.Vector2();
+  const intersects = [];
+
+  const textureLoader = new THREE.TextureLoader();
+  const decalDiffuse = textureLoader.load('assets/textures/decal/decal-diffuse.png');
+  const decalNormal = textureLoader.load('assets/textures/decal/decal-normal.jpg');
+  const decalMaterial = new THREE.MeshPhongMaterial({
+    specular: 0x444444,
+    map: decalDiffuse,
+    normalMap: decalNormal,
+    normalScale: new THREE.Vector2(1, 1),
+    shininess: 30,
+    transparent: true,
+    depthTest: true,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: - 4,
+    wireframe: false
+  });
+
+  const decals = [];
+  let mouseHelper;
+  const position = new THREE.Vector3();
+  const orientation = new THREE.Euler();
+  const size = new THREE.Vector3(10, 10, 10);
 
   initialize();
 
@@ -112,7 +150,7 @@
     scene.add(ambientLight);
 
     //add cameras
-    camera = new THREE.Camera();
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
     scene.add(camera);
 
     //add renderers
@@ -120,6 +158,10 @@
       antialias: true,
       alpha: true
     });
+
+    // White directional light at half intensity shining from the top.
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    scene.add(directionalLight);
     //set renderer's parameters
     renderer.setClearColor(new THREE.Color('lightgrey'), 0)
     renderer.setSize(640, 480);
@@ -127,6 +169,18 @@
     renderer.domElement.style.top = '0px'
     renderer.domElement.style.left = '0px'
     document.body.appendChild(renderer.domElement);
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
+
+    line = new THREE.Line(geometry, new THREE.LineBasicMaterial());
+    scene.add(line);
+    raycaster = new THREE.Raycaster();
+
+    mouseHelper = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 10), new THREE.MeshNormalMaterial());
+    mouseHelper.visible = false;
+    scene.add(mouseHelper);
+
 
     clock = new THREE.Clock();
     deltaTime = 0;
@@ -157,6 +211,19 @@
       onResize()
     });
 
+    function removeDecals() {
+
+      decals.forEach(function (d) {
+
+        scene.remove(d);
+
+      });
+
+      decals.length = 0;
+
+    }
+
+
     ////////////////////////////////////////////////////////////
     // setup arToolkitContext
     ////////////////////////////////////////////////////////////	
@@ -183,6 +250,18 @@
       type: 'pattern', patternUrl: "ar/data/hiro.patt",
     });
 
+    // interpolates from last position to create smoother transitions when moving.
+    // parameter lerp values near 0 are slow, near 1 are fast (instantaneous).
+    let smoothedRoot = new THREE.Group();
+    scene.add(smoothedRoot);
+    let smoothedControls = new THREEx.ArSmoothedControls(smoothedRoot, {
+      lerpPosition: 0.5,
+      lerpQuaternion: 0.5,
+      lerpScale: 1,
+      // minVisibleDelay: 1,
+      // minUnvisibleDelay: 1,
+    });
+
     markerRoot1 = new THREE.Group();
     scene.add(markerRoot1);
 
@@ -197,57 +276,60 @@
     subMarkersControls.push(markerControls1);
 
     // build a multiMarkerControls
-    var multiMarkerControls = THREEx.ArMultiMarkerControls(subMarkersControls)
+    let multiMarkerControls = THREEx.ArMultiMarkerControls(subMarkersControls)
 
-    var smoothedControls = new THREEx.ArSmoothedControls(markerRoot)
-
+    //
+    let timeCount = 0;
     onRenderFcts.push(function (delta) {
       // update artoolkit on every frame
+      if (timeCount >= 10) {
+        THREEx.ArMultiMarkerControls.changeObjectPosition(subMarkersControls, markerRoot, smoothedControls);
+        timeCount = 0;
+      }
+      // additional code for smoothed controls
+      smoothedControls.update(markerRoot);
+      timeCount++;
       if (arToolkitSource.ready !== false)
         arToolkitContext.update(arToolkitSource.domElement);
-        THREEx.ArMultiMarkerControls.changeObjectPosition(subMarkersControls, markerRoot,smoothedControls);
+
     })
 
-      ; (async function () {
-        let db = await IndexDB.openDB(dbName, storeName, 1)
-        count = await IndexDB.getCounts(db, storeName);
+      // ; (async function () {
+      //   let db = await IndexDB.openDB(dbName, storeName, 1)
+      //   count = await IndexDB.getCounts(db, storeName);
 
-        for (var i = 0; i < count; i++) {
+      //   for (var i = 0; i < count; i++) {
+      //     let data = await IndexDB.getDataByKey(db, storeName, i);
+      //     parametersLists.push(data);
+      //     //console.log(parametersLists);
+      //   }
+      // })();
 
-          var data = await IndexDB.getDataByKey(db, storeName, i);
-          parametersLists.push(data);
-        }
+        let material = new THREE.MeshPhongMaterial({ color: 0x00ffff, side: THREE.DoubleSide, transparent: true, opacity: 0.0 });
+        let loader = new THREE.OBJLoader();
 
-        for (var i = 0; i < count; i++) {
+        for (let i = 0; i < 2; i++) {
 
-          let material = new THREE.MeshPhongMaterial({ color: 0x00ffff, side: THREE.DoubleSide, transparent: true, opacity: 0.1 });
-          let loader = new THREE.OBJLoader();
-
-          loader.load('ar/models/box.obj',
+          loader.load('./assets/models/SKIN.obj',
             function (object) {
               object.traverse(function (child) {
                 if (child instanceof THREE.Mesh) {
                   child.material = material;
-
                 }
               });
-
-              var tmpMatrix = new THREE.Matrix4();
-              console.log(parametersLists[i])
-              var array = parametersLists[i].matrix;
-              tmpMatrix.fromArray(array.elements);
-              var position = new THREE.Vector3();
-              var scale = new THREE.Vector3();
-              var quaternion = new THREE.Quaternion();
-              tmpMatrix.decompose(position, quaternion, scale);
-              var rotation = new THREE.Euler().setFromQuaternion(quaternion);
-              object.position.set(position.x, yoffset, zoffset);
-              object.rotation.set(rotation.x, rotation.y, rotation.z);
-              object.rotation.x = Math.PI;
-              object.rotation.z = Math.PI;
-              object.scale.set(scale.x, scale.y, scale.z);
+              // let tmpMatrix = new THREE.Matrix4();
+              // let array = parametersLists[i].matrix;
+              // tmpMatrix.fromArray(array.elements);
+              // let position = new THREE.Vector3();
+              // let scale = new THREE.Vector3();
+              // let quaternion = new THREE.Quaternion();
+              // tmpMatrix.decompose(position, quaternion, scale);
+              // let rotation = new THREE.Euler().setFromQuaternion(quaternion);
+              //为了毕设展稳定展示，此地方使用unity数值
+              object.position.set(xoffset, yoffset, zoffset[i]);
+              object.rotation.set(THREE.MathUtils.degToRad(270), THREE.MathUtils.degToRad(0), THREE.MathUtils.degToRad(0));
+              object.scale.set(0.025, 0.025, 0.025);
               markerRoots[i].add(object);
-
             },
             function (xhr) {
               console.log((xhr.loaded / xhr.total * 100) + "% loaded")
@@ -259,64 +341,166 @@
         }
 
 
-
-
         //////////////////////////////////////////////////////////////////////////////////
         //		Add simple object on smoothedRoot(marker root)
         //////////////////////////////////////////////////////////////////////////////////
-
-        let material2 = new THREE.MeshPhongMaterial({ color: 0xff00ff, transparent: false, opacity: 0.5 });
-        let loader2 = new THREE.OBJLoader();
-        loader2.load('ar/models/box.obj',
-          function (object) {
-            object.traverse(function (child) {
-              if (child instanceof THREE.Mesh) {
-                child.material = material2;
-              }
-            });
+        //load objects function
+        let loader2 = new THREE.GLTFLoader();
+        let material2 = new THREE.MeshStandardMaterial()
+        let path = './assets/models/compressed/KUANGU.gltf';
+        loader2.load(
+          path,
+          (gltf) => {
+            let object = gltf.scene;
+            mesh = object.children[0];
+            mesh.geometry.computeVertexNormals();
             object.renderOrder = 1;
-            var tmpMatrix = new THREE.Matrix4();
-            var array = parametersLists[0].matrix;
-            tmpMatrix.fromArray(array.elements);
-            var position = new THREE.Vector3();
-            var scale = new THREE.Vector3();
-            var quaternion = new THREE.Quaternion();
-            tmpMatrix.decompose(position, quaternion, scale);
-            var rotation = new THREE.Euler().setFromQuaternion(quaternion);
-            object.position.set(position.x, yoffset, zoffset);
-            object.rotation.set(rotation.x, rotation.y, rotation.z);
-            object.rotation.x = object.rotation.z = Math.PI;
-            object.scale.set(scale.x, scale.y, scale.z);
+            // let tmpMatrix = new THREE.Matrix4();
+            // let array = parametersLists[0].matrix;
+            // tmpMatrix.fromArray(array.elements);
+            // let position = new THREE.Vector3();
+            // let scale = new THREE.Vector3();
+            // let quaternion = new THREE.Quaternion();
+            // tmpMatrix.decompose(position, quaternion, scale);
+            // let rotation = new THREE.Euler().setFromQuaternion(quaternion);
+            //为了毕设展稳定展示，此地方使用unity数值
+            object.position.set(xoffset, yoffset, zoffset[0]);
+            object.rotation.set(THREE.MathUtils.degToRad(270), THREE.MathUtils.degToRad(0), THREE.MathUtils.degToRad(0));
+            object.scale.set(0.025, 0.025, 0.025);
             markerRoot.add(object);
           },
-          function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + "% loaded")
+          (xhr) => {
           },
-          function (err) {
-            console.error("Error loading 'box.obj'", err)
+          (error) => {
+            console.log('An error happened', error);
           }
         );
-      })();
+      
 
     onRenderFcts.push(function () {
       renderer.render(scene, camera);
     })
 
+    onRenderFcts.push(function () {
+      if(markerControls.object3d.visible == true) {
+        mesh = markerControls.object3d.children[0].children[0];
+        console,log(mesh)
+      }
+      else {
+        mesh = null;
+        removeDecals();
+      }
+    })
+
 
     // run the rendering loop
-    var lastTimeMsec = null
+    let lastTimeMsec = null
     requestAnimationFrame(function animate(nowMsec) {
       // keep looping
       requestAnimationFrame(animate);
       // measure time
       lastTimeMsec = lastTimeMsec || nowMsec - 1000 / 60
-      var deltaMsec = Math.min(200, nowMsec - lastTimeMsec)
+      let deltaMsec = Math.min(200, nowMsec - lastTimeMsec)
       lastTimeMsec = nowMsec
       // call each update function
       onRenderFcts.forEach(function (onRenderFct) {
         onRenderFct(deltaMsec / 1000, nowMsec / 1000)
       })
+
     })
+
+    let moved = false;
+
+    window.addEventListener('pointerdown', function () {
+
+      moved = false;
+
+    });
+
+    window.addEventListener('pointerup', function (event) {
+
+      if (moved === false) {
+
+        checkIntersection(event.clientX, event.clientY);
+
+        if (intersection.intersects) shoot();
+
+      }
+
+    });
+
+    window.addEventListener('pointermove', onPointerMove);
+
+    function onPointerMove(event) {
+
+      if (event.isPrimary) {
+
+        checkIntersection(event.clientX, event.clientY);
+
+      }
+    }
+
+
+    function shoot() {
+
+      position.copy(intersection.point);
+      orientation.copy(mouseHelper.rotation);
+      //
+      // if (params.rotate) orientation.z = Math.random() * 2 * Math.PI;
+
+      const scale = 1;
+      size.set(scale, scale, scale);
+
+      const material = decalMaterial.clone();
+      material.color.setHex(Math.random() * 0xffffff);
+
+      const m = new THREE.Mesh(new THREE.DecalGeometry(mesh, position, orientation, size), material);
+
+      decals.push(m);
+      scene.add(m);
+
+    }
+
+    function checkIntersection(x, y) {
+
+      if (mesh === undefined) return;
+
+      mouse.x = (x / window.innerWidth) * 2 - 1;
+      mouse.y = - (y / window.innerHeight) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      raycaster.intersectObject(mesh, false, intersects);
+
+      if (intersects.length > 0) {
+
+        const p = intersects[0].point;
+        mouseHelper.position.copy(p);
+        intersection.point.copy(p);
+
+        const n = intersects[0].face.normal.clone();
+        n.transformDirection(mesh.matrixWorld);
+        n.multiplyScalar(10);
+        n.add(intersects[0].point);
+
+        intersection.normal.copy(intersects[0].face.normal);
+        mouseHelper.lookAt(n);
+
+        const positions = line.geometry.attributes.position;
+        positions.setXYZ(0, p.x, p.y, p.z);
+        positions.setXYZ(1, n.x, n.y, n.z);
+        positions.needsUpdate = true;
+
+        intersection.intersects = true;
+
+        intersects.length = 0;
+
+      } else {
+
+        intersection.intersects = false;
+
+      }
+
+    }
   }
 
 </script>

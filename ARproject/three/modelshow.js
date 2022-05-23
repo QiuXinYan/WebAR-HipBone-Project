@@ -15,7 +15,7 @@
     scene = new THREE.Scene();
     
     camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 10000);
-    camera.position.set(0, 0, 2);       //设置相机的位置
+    camera.position.set(-5, 0, 1);       //设置相机的位置
     camera.lookAt(1, -1, -1);			      //相机看的方向
     scene.add(camera);
 
@@ -79,9 +79,10 @@
             skinmodel = gltf;      
           }
         });
-        model.position.set(0, -5, 0);
+        model.position.set(-2, 0.5, 4);
         model.scale.set(0.003, 0.003, 0.003);
-        model.rotation.x += Math.PI;
+        model.rotation.x += Math.PI/2;
+        model.rotation.y += Math.PI/2;
         scene.add(model);
       },
       (xhr) => {
@@ -108,9 +109,10 @@
             gltf.material = modelPBRmaterial;
           }
         });
-        model.position.set(0, -5, 0);
+        model.position.set(-2, 0.5, 4);
         model.scale.set(0.003, 0.003, 0.003);
-        model.rotation.x += Math.PI;
+        model.rotation.x += Math.PI/2;
+        model.rotation.y += Math.PI/2;
         scene.add(model);
       },
       (xhr) => {
@@ -130,11 +132,15 @@
     ground.receiveShadow = true;
     scene.add(ground);
     
-    //renderer s
+    //renderer 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(innerWidth, innerHeight);
     renderer.setPixelRatio(devicePixelRatio);
-    document.body.appendChild(renderer.domElement); //show in chorme
+    
+    //renderer.domElement.style.position = 'relative'
+    // renderer.domElement.style.top = '0px'
+    // renderer.domElement.style.left = '0px'
+    container.appendChild(renderer.domElement); //show in chorme
     renderer.shadowMap.enabled = true;
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.minDistance = 0;

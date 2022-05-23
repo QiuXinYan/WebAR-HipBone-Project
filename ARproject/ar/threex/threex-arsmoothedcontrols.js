@@ -107,13 +107,13 @@ THREEx.ArSmoothedControls.prototype.update = function(targetObject3d){
 	// apply lerp steps - require fix time steps to behave the same no matter the fps
 	if( this._lastLerpStepAt === null ){
 		applyOneSlerpStep()
-		console.log("update smooth: applyOneSlerpStep()" )
+	//	console.log("update smooth: applyOneSlerpStep()" )
 		this._lastLerpStepAt = present
 	}else{
 		var nStepsToDo = Math.floor( (present - this._lastLerpStepAt)/this.parameters.lerpStepDelay )
 		for(var i = 0; i < nStepsToDo; i++){
 			applyOneSlerpStep()
-			console.log("update smooth: applyOneSlerpStep()" )
+		//	console.log("update smooth: applyOneSlerpStep()" )
 			this._lastLerpStepAt += this.parameters.lerpStepDelay
 		}
 	}

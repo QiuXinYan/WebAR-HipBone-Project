@@ -161,7 +161,7 @@ function SidebarScene(editor) {
 	const createMarkerObjectsRow = new UIRow();
 	const buttonCreateMarketObject = new UIButton().setLeft('50px');
 	buttonCreateMarketObject.onClick(function () {
-		editor.selectByName('box.obj');
+		editor.selectByName('SKIN.obj');
 		var originObject = editor.selectedByName;
 		var originObjectMatrix = originObject.matrix;
 		var marker = editor.selected;
@@ -169,7 +169,7 @@ function SidebarScene(editor) {
 		newObjects.name =  originObject.name + newcopyObjects; 
 		newcopyObjects++;
 		newObjects.applyMatrix4(originObjectMatrix.multiply(marker.matrix.invert()));
-		newObjects.translateY(0.5);
+		newObjects.translateZ(10);
 		editor.addObject(newObjects, marker);
 	});
 	createMarkerObjectsRow.add(new UIText(strings.getKey('sidebar/scene/generateMarkers')).setWidth('90px'));
